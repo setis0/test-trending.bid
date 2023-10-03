@@ -1,0 +1,22 @@
+version: '3.5'
+services:
+  redis:
+    image: redislabs/redismod:latest
+    container_name: redis
+    restart: always
+    volumes:
+      - './data/redis:/data'
+    ports:
+      - '6379:6379'
+  puppeteer:
+    image: ghcr.io/puppeteer/puppeteer:21.3.6
+    container_name: puppeteer
+    restart: always
+    depends_on:
+      - redis
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - "3000:3000"
+#    command:
+#      -  /usr/bin/npm run start
